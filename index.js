@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-const ReservationPage = () => {
+const GarbageReservation = () => {
   const [location, setLocation] = useState("");
-  const [time, setTime] = useState(""); // 修正變數名稱
+  const [time, setTime] = useState("");
   const [reservations, setReservations] = useState([]);
 
   const handleReserve = () => {
     if (location && time) {
-      setReservations([...reservations, { location, time }]); // 修正陣列展開語法
+      setReservations([...reservations, { location, time }]);
       setLocation("");
       setTime("");
       alert("預約成功！");
@@ -18,7 +18,7 @@ const ReservationPage = () => {
 
   return (
     <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">垃圾投遞預約</h1>
+      <h1 className="text-2xl font-bold mb-4">垃圾投遞預約系統</h1>
 
       <div className="bg-white p-6 rounded-lg shadow-md w-96">
         <label className="block mb-2">選擇垃圾投遞點：</label>
@@ -43,7 +43,7 @@ const ReservationPage = () => {
 
         <button
           onClick={handleReserve}
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600"
         >
           確認預約
         </button>
@@ -67,4 +67,4 @@ const ReservationPage = () => {
   );
 };
 
-export default ReservationPage;
+export default GarbageReservation;
