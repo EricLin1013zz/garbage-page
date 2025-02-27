@@ -7,44 +7,82 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #eafbea;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            position: relative;
+        }
+        .earth {
+            position: fixed;
+            top: -400px;
+            left: -400px;
+            font-size: 1000px;
+            line-height: 1;
+            z-index: -1;
         }
         .container {
             background: white;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 128, 0, 0.3);
             width: 350px;
             text-align: center;
+            border: 2px solid #4CAF50;
+            position: relative;
+        }
+        h1 {
+            color: #2E7D32;
         }
         select, input, button {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
-            border: 1px solid #ccc;
+            border: 1px solid #4CAF50;
             border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="datetime-local"] {
+            width: calc(100% - 4px);
         }
         button {
-            background: green;
+            background: #4CAF50;
             color: white;
             font-size: 16px;
             cursor: pointer;
+            border: none;
+            transition: 0.3s;
         }
         button:hover {
-            background: darkgreen;
+            background: #388E3C;
         }
         .reservations {
             margin-top: 20px;
             text-align: left;
+            background: #f0fff0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #4CAF50;
+        }
+        .copy-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin-left: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .copy-button:hover {
+            background: #388E3C;
         }
     </style>
 </head>
 <body>
+    <div class="earth">🌍</div>
     <div class="container">
         <h1>垃圾投遞預約系統</h1>
         <label>選擇垃圾投遞點：</label>
@@ -54,30 +92,60 @@
             <option value="合作餐廳B">合作餐廳B</option>
             <option value="合作餐廳C">合作餐廳C</option>
         </select>
+        <label>選擇垃圾重量（公斤）：</label>
+        <select id="weight">
+            <option value="">請選擇</option>
+            <option value="1">1 公斤</option>
+            <option value="2">2 公斤</option>
+            <option value="3">3 公斤</option>
+            <option value="4">4 公斤</option>
+            <option value="5">5 公斤</option>
+            <option value="6">6 公斤</option>
+            <option value="7">7 公斤</option>
+            <option value="8">8 公斤</option>
+            <option value="9">9 公斤</option>
+            <option value="10">10 公斤</option>
+        </select>
         <label>選擇時間：</label>
         <input type="datetime-local" id="time">
-        <button onclick="handleReserve()">確認預約</button>
+        <button onclick="handleReserve()">✅ 確認預約</button>
         <div class="reservations">
-            <h2>預約紀錄</h2>
+            <h2>📋 預約紀錄</h2>
             <ul id="reservationList"></ul>
         </div>
     </div>
 
     <script>
+        function generateRandomCode() {
+            return Math.random().toString(36).substring(2, 12).toUpperCase();
+        }
+
         function handleReserve() {
             const location = document.getElementById("location").value;
             const time = document.getElementById("time").value;
+            const weight = document.getElementById("weight").value;
             const reservationList = document.getElementById("reservationList");
             
-            if (location && time) {
+            if (location && time && weight) {
+                const uniqueCode = generateRandomCode();
                 const listItem = document.createElement("li");
-                listItem.textContent = `📍 ${location} - 🕒 ${time}`;
+                listItem.innerHTML = `📍 ${location} - 🕒 ${time} - ⚖️ ${weight} 公斤 - <strong>🔑 ${uniqueCode}</strong> <button class="copy-button" onclick="copyToClipboard('${uniqueCode}')">📋 複製</button>`;
                 reservationList.appendChild(listItem);
                 
-                alert("預約成功！");
+                alert("預約成功！🌱");
             } else {
-                alert("請選擇地點與時間");
+                alert("請選擇地點、時間並選擇重量");
             }
+        }
+
+        function copyToClipboard(text) {
+            const tempInput = document.createElement("input");
+            document.body.appendChild(tempInput);
+            tempInput.value = text;
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            alert("已複製: " + text);
         }
     </script>
 </body>
