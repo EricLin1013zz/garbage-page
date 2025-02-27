@@ -3,10 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>垃圾預約系統</title>
+    <title>垃圾投遞預約系統</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: green;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: darkgreen;
+        }
+        .reservations {
+            margin-top: 20px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
-    <h1>垃圾預約系統</h1>
-    <script src="index.js"></script>
+    <div class="container">
+        <h1>垃圾投遞預約系統</h1>
+        <label>選擇垃圾投遞點：</label>
+        <select id="location">
+            <option value="">請選擇</option>
+            <option value="合作餐廳A">合作餐廳A</option>
+            <option value="合作餐廳B">合作餐廳B</option>
+            <option value="合作餐廳C">合作餐廳C</option>
+        </select>
+        <label>選擇時間：</label>
+        <input type="datetime-local" id="time">
+        <button onclick="handleReserve()">確認預約</button>
+        <div class="reservations">
+            <h2>預約紀錄</h2>
+            <ul id="reservationList"></ul>
+        </div>
+    </div>
+
+    <script>
+        function handleReserve() {
+            const location = document.getElementById("location").value;
+            const time = document.getElementById("time").value;
+            const reservationList = document.getElementById("reservationList");
+            
+            if (location && time) {
+                const listItem = document.createElement("li");
+                listItem.textContent = `📍 ${location} - 🕒 ${time}`;
+                reservationList.appendChild(listItem);
+                
+                alert("預約成功！");
+            } else {
+                alert("請選擇地點與時間");
+            }
+        }
+    </script>
 </body>
 </html>
